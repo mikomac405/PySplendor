@@ -1,10 +1,11 @@
 import os
 import pygame
+from win32api import GetSystemMetrics
 from pygame.locals import *
 
 FPS = 60
-HEIGHT= 700
-WIDTH = int(HEIGHT*1.9)
+HEIGHT= GetSystemMetrics(1)
+WIDTH = GetSystemMetrics(0)
 CARDS_IMAGES = []
 
 for file in os.listdir("cards"):

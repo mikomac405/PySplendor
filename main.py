@@ -4,18 +4,22 @@ from handlers import handle_collide
 from config import *
 from pygame.time import Clock
 
-SCREEN = pygame.display.set_mode((WIDTH, HEIGHT),HWSURFACE|DOUBLEBUF|RESIZABLE)
-SURFACE = SCREEN.copy()
+SCREEN = pygame.display.set_mode((WIDTH, HEIGHT),HWSURFACE|DOUBLEBUF|FULLSCREEN)
+# SURFACE = SCREEN.copy()
 
 def draw_window(scale, cards):
-    pygame.draw.rect(SURFACE, GREEN_BORDER, BORDER)
-    pygame.draw.rect(SURFACE, GREEN_BOARD, BOARD)
+    pygame.draw.rect(SCREEN, GREEN_BORDER, BORDER)
+    pygame.draw.rect(SCREEN, GREEN_BOARD, BOARD)
     if scale:
-        SURFACE.blit(CARDS_IMAGES[0], (cards.x, cards.y))
+        SCREEN.blit(CARDS_IMAGES[0], (cards[0].x, cards[0].y))
+        SCREEN.blit(CARDS_IMAGES[0], (cards[1].x, cards[1].y))
+        SCREEN.blit(CARDS_IMAGES[0], (cards[2].x, cards[2].y))
     else:
-        SURFACE.blit(pygame.transform.scale(CARDS_IMAGES[0], (cards.width, cards.height)), (cards.x, cards.y))
+        SCREEN.blit(pygame.transform.scale(CARDS_IMAGES[0], (cards[0].width, cards[0].height)), (cards[0].x, cards[0].y))
+        SCREEN.blit(pygame.transform.scale(CARDS_IMAGES[0], (cards[1].width, cards[1].height)), (cards[1].x, cards[1].y))
+        SCREEN.blit(pygame.transform.scale(CARDS_IMAGES[0], (cards[2].width, cards[2].height)), (cards[2].x, cards[2].y))
     pygame.display.update()
-    SCREEN.blit(pygame.transform.scale(SURFACE, SCREEN.get_rect().size), (0, 0))
+    SCREEN.blit(pygame.transform.scale(SCREEN, SCREEN.get_rect().size), (0, 0))
     pygame.display.flip()
 
 
@@ -24,23 +28,20 @@ def main():
     clock = pygame.time.Clock()
     scale = False
     run = True
-    
+    TEST_CARD = pygame.Rect((120, 120), (114, 161))
+    TEST_CARD2 = pygame.Rect((120, HEIGHT/2-80), (114, 161))
+    TEST_CARD3 = pygame.Rect((120, HEIGHT-120-161), (114, 161))
     while run:
         clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-            elif event.type == pygame.VIDEORESIZE:
-                x, y = event.size
-                x = int(y*1.9)
-                SCREEN = pygame.display.set_mode((x,y), HWSURFACE|DOUBLEBUF|RESIZABLE)
-        TEST_CARD = pygame.Rect((120, 120), (114, 161))
         if handle_collide(TEST_CARD):
             scale = True
         else:
             scale = False
 
-        draw_window(scale, TEST_CARD)
+        draw_window(scale, [TEST_CARD, TEST_CARD2, TEST_CARD3])
 
     pygame.quit()
 
