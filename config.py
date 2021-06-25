@@ -1,16 +1,17 @@
 import os
 import pygame
+from pygame.locals import *
 
 FPS = 60
-WIDTH, HEIGHT = 1200, 700
-SURFACE = pygame.display.set_mode((WIDTH, HEIGHT))
+HEIGHT= 700
+WIDTH = int(HEIGHT*1.9)
 CARDS_IMAGES = []
 
 for file in os.listdir("cards"):
     img = pygame.image.load(os.path.join("cards",file))
     CARDS_IMAGES.append(img)
 
-TEST_CARD = pygame.Rect(120, 120, 114, 161)
+
 
 GREEN_BORDER = (0, 155, 80)
 GREEN_BOARD = (0, 197, 125)
