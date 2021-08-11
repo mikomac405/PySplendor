@@ -4,6 +4,7 @@ from handlers import handle_collide
 from config import *
 from pygame.time import Clock
 
+
 def draw_window(scale):
     pygame.draw.rect(SURFACE, GREEN_BORDER, BORDER)
     pygame.draw.rect(SURFACE, GREEN_BOARD, BOARD)
@@ -36,3 +37,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
