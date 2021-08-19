@@ -1,11 +1,14 @@
 class Card:
-    def __init__(self, id, points, type, price, img_url):
+    def __init__(self, id, points, type, price, img_url, tier):
         self.id = id # int NOT NULL AUTO INCREMENT PRIMARY KEY
         self.points = points # int NOT NULL
-        self.type = type # enum("Emerald", "Sapphire","Diamond","Onyx","Ruby") NOT NULL
+        self.type = type # enum("Emerald", "Sapphire","Diamond","Onyx","Ruby", "VIP") NOT NULL
         self.price = price # int NOT NULL FOREIGN KEY
         self.img_url = img_url # varchar(20) NOT NULL
+        self.tier = tier # int
+        self.scale = False
 
+        
     def __str__(self):
         return self.img_url
 
