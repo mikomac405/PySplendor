@@ -2,11 +2,13 @@ from ursina import *
 from os import listdir
 from os.path import isfile, join
 import numpy as np
+from typing import *
 from ursina.prefabs.first_person_controller import FirstPersonController
 from ursina.scene import Scene
-from pysplendor import game_objects, models, ui_objects
+from pysplendor.models import TableModel, CardModel, ChipModel, FloorModel
+from pysplendor.ui_objects import StartPanel
 
-files = [f for f in listdir('cards') if isfile(join('cards', f))]
+files: List[str] = [f for f in listdir('cards') if isfile(join('cards', f))]
 
 app = Ursina()
 
@@ -19,20 +21,20 @@ app = Ursina()
 class Game(Scene):
     def __init__(self):
         super().__init__()
-        self.menu = True
         
         # Game properties
-        self.amount_of_players = 2
+        self.menu: bool = True
+        self.amount_of_players: int = 2
 
         # Entities
-        self.panel = ui_objects.StartPanel(on_click=self.panel_submit)
-        self.table = models.TableModel(parent=scene)
-        self.floor = models.FloorModel(parent=scene)
-        self.chip = models.ChipModel(parent = self.table, texture=load_texture("assets/chip/chip.tif"))
-        self.cards = []
+        self.panel: StartPanel = StartPanel(on_click=self.panel_submit)
+        self.table: TableModel = TableModel(parent=scene)
+        self.floor: FloorModel = FloorModel(parent=scene)
+        self.chip: ChipModel = ChipModel(parent = self.table, texture=load_texture("assets/chip/chip.tif"))
+        self.cards: List[CardModel] = []
 
         for x in np.arange(-0.975, 1.05, 0.105):
-            card = models.CardModel(parent=self.table, position=(x,0,-0.6), texture = random.choice(files))
+            card: CardModel = CardModel(parent=self.table, position=(x,0,-0.6), texture = random.choice(files))
             self.cards.append(card)
 
     def panel_submit(self):
@@ -59,10 +61,12 @@ def update():
         scene.table.rotation_y += 10 * time.dt
         scene.floor.rotation_y += 10 * time.dt
 
-    # for card in scene.cards:
-    #     if card.dragging:
-    #         card.y = 0.1
-    #     else:
-    #         card.y = -0.02
+    for card in scene.cards:
+        if card.dragging:
+            card.y = 0.1
+        else:
+            card.y = -0.02
+
+        
 
 app.run() 

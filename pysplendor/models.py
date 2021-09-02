@@ -1,4 +1,4 @@
-from ursina import *     
+from ursina import *      
 from ursina import shaders
 
 class FloorModel(Entity):
@@ -34,6 +34,7 @@ class CardModel(Draggable): # parent -> table
             model = 'assets/crd/crd',
             origin_y = 0.5,
             texture = texture,
+            collider = 'box',
             color = color.white,
             highlight_color = color.lime,
             rotation = (0,180,0),
